@@ -17,7 +17,7 @@
 #import <UIKit/UIKit.h>
 
 #define kDimsViewTag 5355321
-#define RGB(r,g,b) ([UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1.0f])
+#define RGB(r,g,b,a) ([UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:(a)])
 /**
  *  加载提示标签
  */
