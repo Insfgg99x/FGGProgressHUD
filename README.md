@@ -1,5 +1,5 @@
 FGGProgressHUD<br>
-![演示](https://github.com/Insfgg99x/FGGDownloader/blob/master/demo.gif)
+![演示](https://github.com/Insfgg99x/FGGProgressHUD/blob/master/demo.gif)
 
 //
 //  FGGProgressHUD.h
