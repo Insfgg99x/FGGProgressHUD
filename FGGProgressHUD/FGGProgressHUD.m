@@ -13,10 +13,8 @@
 +(void)showLoadingOnView:(UIView *)v
 {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    
-    CGFloat xpos=v.frame.size.width/2-80;
-    CGFloat ypos=v.frame.size.height/2;
-    FGGProgressHUD *loadingView=[[FGGProgressHUD alloc]initWithFrame:CGRectMake(xpos, ypos, 160, 60)];
+    FGGProgressHUD *loadingView=[[FGGProgressHUD alloc]initWithFrame:CGRectMake(0, 0, 160, 60)];
+    loadingView.center=v.center;
     loadingView.backgroundColor=RGB(71, 71, 71,0.3);
     loadingView.layer.cornerRadius=6;
     loadingView.clipsToBounds=YES;
@@ -26,7 +24,6 @@
     loadingView.font=[UIFont boldSystemFontOfSize:20];
     
     UIActivityIndicatorView *indicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    indicator.hidden=NO;
     [indicator startAnimating];
     indicator.frame=CGRectMake(10, 15, 30, 30);
     [loadingView addSubview:indicator];
