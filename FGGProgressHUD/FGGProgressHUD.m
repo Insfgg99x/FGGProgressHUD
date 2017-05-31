@@ -1,49 +1,71 @@
-//
-//  FGGProgressHUD.m
-//  FGGProgressHUD
-//
-//  Created by 夏桂峰 on 15/8/12.
-//  Copyright (c) 2015年 夏桂峰. All rights reserved.
-//
 
 #import "FGGProgressHUD.h"
+#import "Masonry.h"
 
 @implementation FGGProgressHUD
 
-+(void)showLoadingOnView:(UIView *)v
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    FGGProgressHUD *loadingView=[[FGGProgressHUD alloc]initWithFrame:CGRectMake(0, 0, 160, 60)];
-    loadingView.center=v.center;
-    loadingView.backgroundColor=RGB(71, 71, 71,0.3);
-    loadingView.layer.cornerRadius=6;
-    loadingView.clipsToBounds=YES;
-    loadingView.text=@"    Loading...";
-    loadingView.textColor=[UIColor whiteColor];
-    loadingView.textAlignment=NSTextAlignmentCenter;
-    loadingView.font=[UIFont boldSystemFontOfSize:20];
++(FGGProgressHUD *)showLoadingOnView:(UIView *)v{
+    
+    FGGProgressHUD *loadingView=[[FGGProgressHUD alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    loadingView.backgroundColor=[UIColor colorWithWhite:0.2 alpha:1];
+    loadingView.layer.cornerRadius=10;
     
     UIActivityIndicatorView *indicator=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    [indicator startAnimating];
-    indicator.frame=CGRectMake(10, 15, 30, 30);
+    indicator.activityIndicatorViewStyle=UIActivityIndicatorViewStyleWhiteLarge;
     [loadingView addSubview:indicator];
-
-    [UIView animateWithDuration:0.3 animations:^{
-        [v addSubview:loadingView];
+    [indicator mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.top.equalTo(loadingView).offset(20);
+        make.centerX.equalTo(loadingView);
+        make.size.mas_equalTo(CGSizeMake(30, 30));
     }];
-}
-+(void)hideLoadingFromView:(UIView *)v
-{
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [indicator startAnimating];
     
-    for(UIView *sub in v.subviews)
-    {
-        if([sub isKindOfClass:[FGGProgressHUD class]])
-        {
-            [UIView animateWithDuration:0.3 animations:^{
+    UILabel *lb=[[UILabel alloc] initWithFrame:CGRectZero];
+    lb.text=@"Loading...";
+    lb.textColor=[UIColor whiteColor];
+    lb.textAlignment=NSTextAlignmentCenter;
+    lb.font=[UIFont boldSystemFontOfSize:17];
+    [loadingView addSubview:lb];
+    [lb mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.top.equalTo(indicator.mas_bottom).offset(10);
+        make.left.equalTo(loadingView).offset(5);
+        make.right.equalTo(loadingView).offset(-5);
+        make.height.equalTo(@20);
+    }];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        [v addSubview:loadingView];
+        [loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+            
+            make.center.equalTo(v);
+            make.size.mas_equalTo(CGSizeMake(100, 100));
+        }];
+    }];
+    return loadingView;
+}
++(void)hideLoadingFromView:(UIView *)v{
+    
+    for(UIView *sub in v.subviews){
+        
+        if([sub isKindOfClass:[FGGProgressHUD class]]){
+            
+            [UIView animateWithDuration:0.2 animations:^{
+                
                 [sub removeFromSuperview];
             }];
         }
     }
 }
+-(void)hide{
+    
+    __weak typeof(self) wkself=self;
+    [UIView animateWithDuration:0.2 animations:^{
+        
+        [wkself removeFromSuperview];
+    }];
+}
+
 @end
