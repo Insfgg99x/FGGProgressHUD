@@ -10,6 +10,6 @@ s.source       = { :git => "https://github.com/Insfgg99x/FGGProgressHUD.git", :t
 s.ios.deployment_target = '7.0'
 s.source_files = 'FGGProgressHUD/*.{h,m}'
 s.requires_arc = true
-#s.dependency 'pop'
+s.dependency 'Masonry'
 end
 
